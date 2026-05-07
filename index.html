@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ESP32 GPS Monitor</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+  <style>
+
+    body{
+      background:#0f172a;
+      color:white;
+      font-family:Arial;
+      text-align:center;
+      margin:0;
+      padding:20px;
+    }
+
+    h1{
+      color:#38bdf8;
+    }
+
+    .card{
+      background:#1e293b;
+      margin:10px auto;
+      padding:15px;
+      border-radius:15px;
+      width:300px;
+      box-shadow:0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .value{
+      font-size:25px;
+      color:#22c55e;
+      margin-top:10px;
+    }
+
+  </style>
+</head>
+<body>
+
+<h1>ESP32 GPS MONITOR</h1>
+
+<div class="card">
+  <h2>Status GPS</h2>
+  <div class="value" id="status">---</div>
+</div>
+
+<div class="card">
+  <h2>Latitude</h2>
+  <div class="value" id="lat">---</div>
+</div>
+
+<div class="card">
+  <h2>Longitude</h2>
+  <div class="value" id="lon">---</div>
+</div>
+
+<div class="card">
+  <h2>Speed</h2>
+  <div class="value" id="speed">---</div>
+</div>
+
+<div class="card">
+  <h2>Satellite</h2>
+  <div class="value" id="sat">---</div>
+</div>
+
+<div class="card">
+  <h2>Pressure</h2>
+  <div class="value" id="pressure">---</div>
+</div>
+
+<div class="card">
+  <h2>Altitude</h2>
+  <div class="value" id="altitude">---</div>
+</div>
+
+<script>
+
+const firebaseConfig = {
+
+  apiKey: "AIzaSyDnPPRKN2VW_zJIC8IFjjgg8qMWaX-Zjeo",
+
+  databaseURL:
+  "https://sistem-otomasi-65a7a-default-rtdb.asia-southeast1.firebasedatabase.app/"
+
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.database();
+
+db.ref("monitor").on("value", (snapshot)=>{
+
+  const data = snapshot.val();
+
+  document.getElementById("status").innerHTML =
+  data.status;
+
+  document.getElementById("lat").innerHTML =
+  data.latitude;
+
+  document.getElementById("lon").innerHTML =
+  data.longitude;
+
+  document.getElementById("speed").innerHTML =
+  data.speed + " KM/H";
+
+  document.getElementById("sat").innerHTML =
+  data.satellite;
+
+  document.getElementById("pressure").innerHTML =
+  data.pressure + " hPa";
+
+  document.getElementById("altitude").innerHTML =
+  data.altitude + " m";
+
+});
+
+</script>
+
+</body>
+</html>
